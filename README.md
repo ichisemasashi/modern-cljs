@@ -15,135 +15,76 @@ using `boot`.
 
 # Modern ClojureScript
 
-> **ATTENTION NOTE**: I'm in the process of publishing the
-> [second edition][1] of the series. The main difference from the
-> [first edition][2] regards the use of the [Boot][3] build tool instead
-> of [Leiningen][4]. This second edition is still a draft version and
-> you should be forgiving if you find errors, typos or even bugs in
-> the code.
+> **ATTENTION NOTE**: [第2版][1]を公開する途中です。 [初版][2]との主な違いは、[Leiningen][4]の代わりに[Boot][3]ビルドツールを使用することです。 この第2版は依然としてドラフト版であり、エラー、誤植、またはコード内のバグが見つかった場合は、寛容でなければなりません。
 
+> **WARNING NOTE FOR WINDOWS USERS**: 現時点では、bootは10未満のMS Windowsでは実行しません。これに当てはまる場合は、modern-cljsシリーズに従うために、[仮想マシン](https://www.virtualbox.org/)または[docker Linuxコンテナ](https://docs.docker.com/windows/)を使用してください。
 
-> **WARNING NOTE FOR WINDOWS USERS**: At the moment `boot` does not run
-> on MS Windows less than 10. If this is your case, to be able to
-> follow the `modern-cljs` series you can use use a
-> [virtual machine](https://www.virtualbox.org/) or
-> [docker linux container](https://docs.docker.com/windows/).
+モダンClojureScript（modern-cljs）は、[ClojureScript][5]（CLJS）プロジェクトの作成と実行をガイドする一連のチュートリアルです。
 
-Modern ClojureScript (`modern-cljs`) is a series of tutorials that
-guide you in creating and running [ClojureScript][5] (CLJS) projects.
-
-CLJS is a compiler for the Clojure programming language that targets
-JavaScript. It emits JavaScript code which runs in web browsers and
-other client-side or server-side JavaScript interpreters
-(e.g. [nodejs][6]).
+CLJSはJavaScriptをターゲットとするClojureプログラミング言語のコンパイラです。 これは、Webブラウザやその他のクライアントサイドまたはサーバーサイドのJavaScriptインタプリタ（[nodej][6]など）で動作するJavaScriptコードを生成します。
 
 ## Required background
 
-These tutorials require that you have some prior programming
-experience.  They assume you've gotten your hands dirty by trying a
-little Clojure, even if you're not proficient in it yet. It will also
-be quite helpful if you have some experience programming for the Web
-using HTML, JavaScript and the browser DOM.
+このチュートリアルでは、事前のプログラミング経験が必要です。 チュートリアルはあなたがまだClojureに堪能ではない場合でも、少しはClojureを試していると仮定します。 また、HTML、JavaScript、ブラウザDOMを使用してWebをプログラミングする経験がある場合には、非常に役立ちます。
 
-If you don't know anything about Clojure (or about Lisp), I recommend
-you learn a little bit before starting these tutorials.
+Clojure（またはLispについて）について何も知らなければ、これらのチュートリアルを始める前にちょっと勉強することをお勧めします。
 
-There are plenty of outstanding resources on Clojure that are freely
-available on the Internet, and you can't overestimate the benefit of
-reading a book on Clojure (or another Lisp dialect) to your value as a
-programmer.
+Clojureには、インターネット上で自由に利用できる優れたリソースがたくさんあります。プログラマとしてあなたの価値のためにClojure（または他のLispの方言）の本を読むことの利点を過大評価することはできません。
 
-Here are some book recommendations:
+いくつかの本をお薦めします。
 
-* [Clojure Programming][7]: written by three of the heroes of Clojure,
-  it contains everything you need to know about Clojure and its
-  ecosystem.
-* [Programming Clojure][8]: written by another legendary Clojure
-  developer, it's the easiest path to learning Clojure.
-* [The Joy of Clojure][9]: the title speaks by itself. A must read!
+* [Clojure Programming][7]:
+  Clojureの3人のヒーローによって書かれた。Clojureとそのエコシステムについて知る必要があるすべてを含んでいます。
+* [Programming Clojure][8]: 他の伝説のClojure開発者が書いた、Clojureを学ぶ最も簡単な方法です。
+* [The Joy of Clojure][9]: タイトルが内容を語っている。 読む必要があります！
 * [ClojureScript Rationale][41] and [ClojureScript Quick Start][42]
-* [ClojureScript Up and Running][10]: at the moment, it's the only
-  published book on ClojureScript. The book is a bit outdated since
-  ClojureScript is evolving quickly. It's brief and useful, especially
-  if you want to integrate with external JavaScript libraries.
-* [SICP - Structure and Interpretation of Computer Programs][11]: this
-  is the best programming book I've read in my very long career. It
-  uses [Scheme/Racket][12] (a Lisp dialect) rather than Clojure and is
-  available [online][13], in [print][13], or in a
-  [lecture series][14].
-* [On Lisp][15]: if you want to learn about macros, this is the place
-  to start.  It uses Common Lisp (a Lisp dialect) rather than Clojure.
+* [ClojureScript Up and Running][10]: 現時点では、ClojureScriptに関する唯一の出版された本です。 ClojureScriptは進化が速いので、この本は少し古くなっています。 短くて便利です。特に、外部のJavaScriptライブラリと統合したい場合は。
+* [SICP - Structure and Interpretation of Computer Programs][11]: これは私が非常に長いキャリアで読んだ最高のプログラミング本です。 これは、Clojureではなく[Scheme/Racket][12]（Lispの方言）を使用しており、[オンライン版][13]、[印刷版][13]、または[講義シリーズ][14]で利用可能です。
+* [On Lisp][15]: マクロについて知りたければ、これが始める場所です。 ClojureではなくCommon Lisp（Lisp方言）を使用します。
 
 ## Required tools
 
-Many people worry about which operating system and editor/IDE are best
-for developing in Clojure and ClojureScript. I personally use Mac OS
-X, Debian and Ubuntu. I use Emacs as an editor.
+多くの人がClojureとClojureScriptで開発するのに最適なオペレーティングシステムとエディタ/IDEについて心配しています。 私は個人的にはMac OS X、Debian、Ubuntuを使います。 Emacsをエディタとして使用しています。
 
-Because I'm an old-timer, [*nix][43] and Emacs are the OS and editor I know best.
-That being said, in this series of tutorials you're not going to find any
-suggestions or reference to operating systems or editors. Use whatever tools
-you already have and know. I have too much respect for people developing
-IDE/plugins for Clojure/CLJS to say that one is better than another, and
-you don't want to combine learning a new programming language with trying
-to learn a new programming environment.
+私は古い人間なので、[*nix][43]とEmacsは私が最もよく知っているOSとエディタです。 つまり、この一連のチュートリアルでは、オペレーティングシステムやエディタに関する提案や参照はありません。 すでに持っていて知っているツールを使用してください。 私はClojure/CLJSのためのIDE/プラグインを開発している人たちを尊敬しているので、あるものが他のものよりも優れていると言うことができませんし、あなたは新しいプログラミング言語の学習と新しいプログラミング環境の学習を組み合わせたくありません。
 
-> NOTE: If you are interested in learning more about Emacs here are some
-[resources to help get you started]
-(https://github.com/magomimmo/modern-cljs/blob/master/doc/supplemental-material/emacs-cider-references.md).
+> NOTE: Emacsについてもっと学びたいと思っている人は、[あなたが始めるのを助けるためのリソース](https://github.com/magomimmo/modern-cljs/blob/master/doc/supplemental-material/emacs-cider-references.md).
 
-You will need to have [git][16] and [Java][34] installed and you'll
-need some familiarity with the [basics of git][17].
+[git][16]と[Java][34]がインストールされている必要があります。また、[gitの基本][17]に精通している必要があります。
 
 ## Clojure community documentation
 
-Community created clojure documentation sites that you may find helpful are
-[clojuredocs](http://clojuredocs.org/) and [Grimoire](https://www.conj.io/).
+コミュニティが作ったあなたの役に立つであろうClojureのドキュメント・サイトは、[clojuredocs](http://clojuredocs.org/) と [Grimoire](https://www.conj.io/).
 
 ## Libraries and tools
 
-[Clojure Toolbox](http://www.clojure-toolbox.com/) is a directory of
-libraries and tools for CLJ/CLJS.
+[Clojure Toolbox](http://www.clojure-toolbox.com/)は、CLJ / CLJS用のライブラリとツールのディレクトリです。
 
 ## Why the name Modern ClojureScript?
 
-You might wonder why this tutorial series is named `modern-cljs` when
-ClojureScript is so recent. I started this series in 2012 while trying
-to port a few examples from the
-[Modern JavaScript: Develop and Design][18] book to ClojureScript, and
-now it's too late to change.
+このチュートリアルシリーズがなぜmodern-cljsという名前になったのか、ClojureScriptが最近のものであるのか疑問に思うかもしれません。 私が2012年にこのシリーズを開始したとき、[モダンJavaScript：Develop and Design][18] bookからClojureScriptへ例題をいくつか移植しようとしていました。今は変更するのが遅すぎます。
 
 # The Tutorials
 
-As said, this is the [second edition][1] of the series and is based on
-the [Boot][3] build tool. I'm not going to update or support the
-[first edition][2] of the series which was based on the [Leiningen][4]
-build tool.
+言いましたように、これはシリーズの[第2版][1]で、[Boot][3]ビルドツールに基づいています。 私は[Leiningen][4]ビルドツールに基づいたシリーズの[初版][2]を更新したり、サポートしたりするつもりはありません。
 
 ## Introduction
 
-This series of tutorials guides you in creating and running simple CLJS
-projects. The bulk of the series follows the progressive enhancement of
-a single project.
+この一連のチュートリアルでは、簡単なCLJSプロジェクトの作成と実行について説明します。 一連のシリーズは、1つのプロジェクトの段階的な強化をしてゆきます。
 
-While working through the tutorials I *strongly* suggest you start at
-tutorial 1 and type in all the code for each tutorial yourself.
-In my experience this is the the best approach if you're not already
-very fluent with the programming language.
+チュートリアルを通して作業しながら、チュートリアル1から始めて、各チュートリアルのすべてのコードを自分で入力することを*強く*お勧めします。 私の経験では、これはプログラミング言語に習熟していない方が最良のアプローチです。
 
 ## [Tutorial 1 - The Basics][19]
 
-Create and configure a very basic CLJS project.
+非常に基本的なCLJSプロジェクトを作成して設定します。
 
 ## [Tutorial 2 - Immediate Feedback Principle][20]
 
-Approach as close as possible the Bret Victor Immediate Feedback
-Principle to build a very interactive development environment.
+非常にインタラクティブな開発環境を構築するために、Bret Victorの即時フィードバックの原則に可能な限り近づく。
 
 ## [Tutorial 3 - House Keeping][21]
 
-Automate the launching of the `boot` command to approach the Immediate
-Feedback Development Environment (IFDE).
+即時フィードバック開発環境（IFDE）にアプローチするため、bootコマンドの起動を自動化します。
 
 ## [Tutorial 4 - Modern ClojureScript][22]
 
