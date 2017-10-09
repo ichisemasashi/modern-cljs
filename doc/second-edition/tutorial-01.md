@@ -1,46 +1,31 @@
 # Tutorial 1 - The Basics
 
-In this first tutorial we are going to create and configure a minimum
-ClojureScript ([CLJS][1]) project by using the [boot][2] build tool.
+この最初のチュートリアルでは、[boot][2]ビルドツールを使用して最小限のClojureScript（[CLJS][1]）プロジェクトを作成および設定します。
 
 ## Requirements
 
-This tutorial requires `java` and `boot` to be installed on your
-computer.
+このチュートリアルでは、コンピュータに`Java`と`boot`をインストールする必要があります。
 
-To install `java` follow the [instructions][3] for your operating
-system. To install `boot` follow the very easy instructions in the
-corresponding section of its [README][4].
+`java`をインストールするには、お使いのオペレーティングシステムに沿った[手順][3]に従ってください。 `boot`をインストールするには、[README][4]の対応するセクションの簡単な手順に従ってください。
 
-Test the installation by issuing the `boot -h` command at the
-terminal. Then submit the `boot -u` command to get the latest `boot`
-updates.
+ターミナルで`boot -h`コマンドを実行して、インストールをテストします。 次に、`boot -u`コマンドを発行して、最新バージョンの`boot`を取得します。
 
-> NOTE 1: I strongly suggest to use Java 8. If you're using Java 7, it
-> might be worth mentioning
-> https://github.com/boot-clj/boot/wiki/JVM-Options#permgen-errors
+> NOTE 1: 私は強くJava 8を使用することをお勧めします。あなたがJava 7を使用している場合、それは言及する価値があるかもしれません
+ https://github.com/boot-clj/boot/wiki/JVM-Options#permgen-errors
 
 ## Create the project structure
 
-A minimum CLJS web project is composed of 3 files:
+CLJSの最低限のWebプロジェクトは、3つのファイルで構成されています。
 
-* an html page;
-* a CLJS source code;
-* a `boot` build file to compile CLJS source code.
+* htmlページ x 1;
+* CLJSソースコード x 1;
+* CLJSソースコードをコンパイルするための`boot`ビルドファイル x 1
 
-Even if CLJS does not dictate a specific directory structure, it's a
-good practice to organize your project in such a way that it will be
-easy for anyone, even yourself in a few months, to be able to
-understand the project components and its structure. Moreover, each
-building tool has its own idiosyncrasies, which they call
-defaults. The more you adhere to the defaults of the tool at
-hand, the less pain you will experience while managing the project.
+CLJSが特定のディレクトリ構造を指示していない場合でも、プロジェクト構成要素とその構造を理解できるように、数か月だけでも簡単にプロジェクトを構成することをお勧めします。 さらに、各構築ツールには固有の特質があり、デフォルトと呼ばれます。 手元にあるツールのデフォルトを守るほど、プロジェクトを管理する際に苦労することは少なくなります。
 
-Taking these premises into account, let's create a directory
-structure for our new project, named `modern-cljs`, by adhering as
-much as possible to the `boot` defaults.
+これらの前提を考慮して、できるだけ`boot`デフォルトに固執することによって、`modern-cljs`という新しいプロジェクトのディレクトリ構造を作成しましょう。
 
-The suggested file layout of the project is the following:
+プロジェクトにおける推奨されるファイルレイアウトは次のとおりです。
 
 ```bash
 modern-cljs/
@@ -53,28 +38,21 @@ modern-cljs/
             └── core.cljs
 ```
 
-* `modern-cljs` is the home directory of the project;
-* `src/cljs/` hosts CLJS source files;
-* `html` hosts html resources;
+* `modern-cljs` はこのプロジェクトのホームディレクトリ。
+* `src/cljs/` はCLJSソース・ファイルをホストします。
+* `html` はhtmlリソースをホストします。
 
-> NOTE 2: Single segment namespace are
-> [discouraged in CLJ/CLJS][5]. That's why we created the
-> `modern_cljs` directory name. Due to [Java difficulties][6] in
-> managing hyphen "-" (or other special characters) in package names,
-> we substituted an underscore (`_`) for any hyphen (`-`) in
-> corresponding directory names.
+> NOTE 2: CLJ/CLJSでは、単一セグメントの名前空間は[推奨されません][5]。 ですから、`modern_cljs`ディレクトリを作成しました。 パッケージ名にハイフン " - "（または他の特殊文字）を管理することの[Javaの困難さ][6]のために、対応するディレクトリ名のハイフン（`-`）をアンダースコア（`-`）に置き換えました。
 
-> NOTE 3: Please note that the filename extension for ClojureScript
-> sources is **cljs**, not **clj**.
+> NOTE 3: ClojureScriptソースのファイル拡張子は**clj**ではなく**cljs**であることに注意してください。
 
-Issue the following command at the terminal:
+ターミナルで次のコマンドを発行します。
 
 ```bash
 mkdir -p modern-cljs/{src/cljs/modern_cljs,html}
 ```
 
-Let's now create the three needed files by issuing the folowing
-command:
+次のコマンドを発行して、必要な3つのファイルを作成しましょう。
 
 ```bash
 cd modern-cljs
@@ -83,9 +61,7 @@ touch html/index.html src/cljs/modern_cljs/core.cljs build.boot
 
 ## Hello World in CLJS
 
-We're now going to write our very first CLJS code. Open the
-`src/cljs/modern_cljs/core.cljs` file with your preferred editor and
-type into it the following CLJS code:
+ここで、最初のCLJSコードを記述します。`src/cljs/modern_cljs/core.cljs`ファイルを希望のエディタで開き、次のCLJSコードを入力します。
 
 ```clj
 ;; create the main project namespace
@@ -98,21 +74,17 @@ type into it the following CLJS code:
 (println "Hello, World!")
 ```
 
-Every CLJ/CLJS file must start with a namespace declaration matching a
-path on your disk:
+すべてのCLJ/CLJSファイルは、ディスク上のパスに一致する名前空間宣言で始まる必要があります。
 
 `modern-cljs.core` <--> `modern_cljs/core.cljs`
 
-The `(enable-console-print!)` expression redirects any printed output
-to the console of the browser in such a way that the `(println "Hello,
-world!")` prints `Hello, World!` to the console.
+`(enable-console-print!)`の式は、`(println "Hello, world!")`がHello、World！をコンソールに表示するような方法で、ブラウザのコンソールに表示出力をリダイレクトします。
 
 ### Minimal build.boot
 
-We now need a way to compile `core.cljs` to JS and link it to the
-`index.html` page.
+`core.cljs`をJSにコンパイルし、`index.html`ページにリンクする方法が必要です。
 
-First, open the file `html/index.html` and edit it as follows:
+まず、ファイル`html/index.html`を開き、次のように編集します。
 
 ```html
 <!doctype html>
@@ -126,14 +98,9 @@ First, open the file `html/index.html` and edit it as follows:
 </html>
 ```
 
-Note that there are no references to CLJS files. We only added a
-`<script>` tag to link the `index.html` page to the `main.js`
-file. This JS file will be generated by the `boot` building tool while
-compiling the above `core.cljs` source code.
+CLJSファイルへの参照はないことに注意してください。 `<script>`タグを`index.html`ページに追加して、`main.js`ファイルにリンクしました。 このJSファイルは、上記のcore.cljsソースコードをコンパイルする際に`boot`ビルドツールによって生成されます。
 
-To compile the `core.cljs` file, we need to configure the `boot` command by
-editing the `build.boot` file, which is just a regular CLJ file with a
-different extension:
+`core.cljs`ファイルをコンパイルするには、別の拡張子を持つ通常のCLJファイルである`build.boot`ファイルを編集して、`boot`コマンドを設定する必要があります。
 
 ```clj
 (set-env!
@@ -145,21 +112,13 @@ different extension:
 (require '[adzerk.boot-cljs :refer [cljs]])
 ```
 
-Pretty minimal! The `set-env!` function sets `:source-paths` and
-`:resource-paths` options to the corresponding values of the project
-structure as we have created above. Then it injects the `boot-cljs`
-compilation task as the only explicit dependency of the project by
-adding it to the `:dependencies` keyword.
+かなりミニマル！ `set-env!`関数は`:source-paths`と`:resource-paths`オプションを、上で作成したプロジェクト構造の対応する値に設定します。 次に、`:dependencies`キーワードを追加することによって、プロジェクトの唯一の明示的依存関係として`boot-cljs`コンパイルタスクを挿入します。
 
-Note that even if we did not include any `clojure` and `clojurescript`
-dependencies, `boot` will be able to automagically download the
-corresponding releases it knows to work well with it.
+`clojure`と`clojurescript`の依存関係が含まれていなくても、`boot`は自動的にそれがうまく動作することがわかっている対応するリリースを自動的にダウンロードすることができます。
 
-Finally, the `require` form makes the `cljs` task visible to the
-`boot` command.
+最後に、`require`フォームは、`cljs`タスクを`boot`コマンドで参照できるようにします。
 
-If you now run the `boot -h` command from the terminal, you'll see
-that the `cljs` task is now available to `boot`.
+ターミナルから`boot -h`コマンドを実行すると、`cljs`タスクが起動できるようになります。
 
 ```bash
 boot -h
@@ -178,8 +137,7 @@ Tasks:   ...
 Do `boot <task> -h` to see usage info and TASK_OPTS for <task>.
 ```
 
-You now may want to have more information about the `cljs` task by
-issuing the following command:
+次のコマンドを実行することによって、`cljs`タスクに関する詳細情報を取得できます。
 
 ```bash
 boot cljs -h
@@ -189,11 +147,7 @@ Available --optimization levels (default 'none'):
 ...
 ```
 
-As you see, the default optimization directive for the CLJS compiler
-is `none`. Another tutorial will explain the different CLJS compilation
-optimizations (i.e. `none`, `whitespace`, `simple` and `advanced`). At
-the moment stay with `none`, which is commonly used during development
-cycles. Let's see `boot cljs` at work:
+ご覧のとおり、CLJSコンパイラのデフォルトの最適化ディレクティブは`none`です。 別のチュートリアルでは、さまざまなCLJSのコンパイルの最適化について説明します（`none`、`whitespace`、`simple`、`advanced`）。 現時点では、開発サイクル中に一般的に使用されている`none`にしましょう。 作業中の`boot cljs`を見てみましょう：
 
 ```bash
 boot cljs
@@ -202,13 +156,9 @@ Compiling ClojureScript...
 • main.js
 ```
 
-The `cljs` task compiled your CLJS code by producing a `main.js` JS
-file and you now know why we called the JS file included in the
-`<script>` tag of the `index.html` page `main.js`: just to adhere to
-an easy default.
+`cljs`タスクは、`main.js` JSファイルを生成することによってCLJSコードをコンパイルしました。そして今、簡単なデフォルトに準拠するためだけに、`index.html`ページの`<script>`タグで`main.js`を含むJSファイルを呼び出すのかわかるでしょう。
 
-That said, if you look for it the directory structure of the project,
-you'll be surprised to not find it:
+さて、あなたがプロジェクトのディレクトリ構造を探すと、それが見つけられないと驚くでしょう：
 
 ```bash
 tree
@@ -224,9 +174,7 @@ tree
 4 directories, 3 files
 ```
 
-The fact is that by default `boot` does not create an output file if
-you don't explicitely instruct it to do so. Let's see the command line
-help for the `target` predefined task:
+実際には、明示的に指示しなければ、デフォルトでは`boot`は出力ファイルを作成しません。 `target`の定義済みタスクのコマンドラインヘルプを見てみましょう：
 
 ```bash
 boot target -h
@@ -240,11 +188,7 @@ Options:
   -C, --no-clean  Don't clean target before writing project files.
 ```
 
-Interesting. The `target` predefined task of `boot` is able to write
-the output of a task (e.g. `cljs`) to a given directory. The above
-help doesn't tell you, but if you do not specify a directory it writes
-the output file to the a default `target` subdirectory of your project's home
-directory, as you can verify as follows:
+面白い。 `target`の事前定義された`boot`のタスクは、タスク（例えば、`cljs`）の出力を所与のディレクトリに書き込むことができる。 上記のヘルプはあなたには言いませんが、ディレクトリを指定しなければ、出力ファイルをプロジェクトのホームディレクトリのデフォルトの`target`サブディレクトリに書き込みます。これは、次のように確認できます。
 
 ```bash
 boot cljs target
@@ -305,23 +249,18 @@ tree
 17 directories, 27 files
 ```
 
-A lot of stuff. We're not digging into it right now. At the
-moment we're only interested in noting a few things:
+たくさんあります。 今私たちはそれを掘り下げません。 現時点では、私たちはいくつかのことに気づくだけです。
 
-* the original directory structure living in `html` and `src` is
-  untouched
-* everything, even the `index.html` resource, has been generated into
-  the new `target` directory. 
+* `html`と`src`にあるオリジナルのディレクトリにはノータッチ.
+* index.html`リソースまですべてが新しい`target`ディレクトリに生成されています。
 
-Considering that `boot` is under continuous development, I strongly
-suggest you to pin the current stable release in your project by creating a new
-`boot.properties` file as follows:
+`boot`が継続的に進んでいることを考慮して、次のように新しい`boot.properties`ファイルを作成して、プロジェクト内の現在の安定版を固定することを強くお勧めします。
 
 ```bash
 boot -V > boot.properties
 ```
 
-which should now have the following content:
+これには次の内容が含まれるはずです：
 
 ```bash
 cat boot.properties
@@ -334,23 +273,14 @@ BOOT_VERSION=2.7.1
 
 ## Visit index.html
 
-`boot` uses a pretty neat approach in taking apart the input of the
-project from the corresponding output generated by its tasks. You'll
-never see an input file from the `:source-paths` and the
-`:resource-path` original directories be modified by any `boot`
-task. Aside from internally generated temporary directories,
-everything happens in the explicit `target` directory.
+`boot`は、タスクによって生成された対応する出力からプロジェクトの入力を分離する際に、きちんとしたアプローチを採用しています。 `:source-paths`および`:resource-path`元のディレクトリからの入力ファイルは、どのブート・タスクによっても変更されることはありません。 すべては、内部的に生成された一時ディレクトリとは別に、明示的に`target`ディレクトリ内で発生します。
 
-Open a browser and visit the local `target/index.html` file. Now open
-the console in your Development Tool (e.g. Chrome Development Tool).
-If everything went ok, you should see "Hello, World!" printed at the
-console.
+
+ブラウザを開き、ローカルの`target/index.html`ファイルにアクセスしてください。 開発ツール（例：Chrome開発ツール）でコンソールを開きます。 すべてがうまくいけば、 "Hello, World!"がコンソールに表示されます。
 
 ## Next Step - [Tutorial 2: Immediate Feedback Principle][7]
 
-In the next [tutorial][7] we're going to adhere as closely as possible to
-the [Bret Victor Immediate Feedback Principle][8] to build a very
-interactive development environment.
+次の[チュートリアル][7]では、非常に対話型の開発環境を構築するために、[Bret Victorの即時フィードバックの原則][8]に可能な限り厳密に従います。
 
 # License
 
