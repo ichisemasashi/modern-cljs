@@ -72,7 +72,7 @@ Clojureには、インターネット上で自由に利用できる優れたリ�
 
 この一連のチュートリアルでは、簡単なCLJSプロジェクトの作成と実行について説明します。 一連のシリーズは、1つのプロジェクトの段階的な強化をしてゆきます。
 
-チュートリアルを通して作業しながら、チュートリアル1から始めて、各チュートリアルのすべてのコードを自分で入力することを*強く*お勧めします。 私の経験では、これはプログラミング言語に習熟していない方が最良のアプローチです。
+チュートリアルを通して作業しながら、チュートリアル1から始めて、各チュートリアルのすべてのコードを自分で入力することを*強く*お勧めします。 私の経験では、これはプログラミング言語に習熟していない方にとって最良のアプローチです。
 
 ## [Tutorial 1 - The Basics][19]
 
@@ -88,94 +88,79 @@ Clojureには、インターネット上で自由に利用できる優れたリ�
 
 ## [Tutorial 4 - Modern ClojureScript][22]
 
-Have some fun with CLJS form validation by porting the JavaScript login form
-example from [Modern JavaScript: Develop and Design][18] to CLJS.
+[モダンJavaScript：Develop and Design][18]のJavaScriptログインフォームの例をCLJSへ移植することで、CLJSフォームの検証を楽しくしてください。
 
 ## [Tutorial 5 - Introducing Domina][23]
 
-Use the [Domina library][24] to make our login form validation more Clojure-ish.
+ログイン・フォームをよりClojureらしくするために[Domina library][24]を使う。
 
 ## [Tutorial 6 - The Easy Made Complex, and the Simple Made Easy][25]
 
-Investigate and find two different ways to solve an issue from the last
-tutorial.
+最新のチュートリアルから問題を解決するための2つの異なる方法を調査して見つけます。
 
 ## [Tutorial 7 - Introducing Domina Events][26]
 
-Use Domina events for a more Clojure-ish approach to handling DOM events.
+DOMイベントを処理を、よりClojureらしくアプローチするため、Dominaイベントを使用する。
 
 ## [Tutorial 8 - DOM Manipulation][27]
 
-Programmatically manipulate DOM elements in response to DOM events.
+DOMイベントに応答するDOM要素をプログラム的に操作します。
 
 ## [Tutorial 9 - Introducing AJAX][28]
 
-Use AJAX to let the CLJS client-side code communicate with the server.
+AJAXを使用して、CLJSクライアント側のコードをサーバーと通信させます。
 
 ## [Tutorial 10 - A Deeper Understanding of Domina Events][29]
 
-Apply Domina events to the login form example from the
-[4th Tutorial][22].
+[第4回チュートリアル][22]のログインフォームの例にDominaのイベントを適用します。
 
 ## [Tutorial 11 - HTML on Top, Clojure on the Bottom][30]
 
-Explore the highest (HTML5) and deepest (Clojure on the server) layers
-of the login form example from the [previous tutorial][29].
+前のチュートリアルのログインフォームの例の高い（HTML5）層と深い（サーバー上のClojure）の層を調べます。
 
 ## [Tutorial 12 - Don't Repeat Yourself][31]
 
-Respect the [Don't Repeat Yourself (DRY) principle][44] by sharing
-validators between the client-side CLJS and the server-side Clojure.
+クライアント側のCLJSとサーバー側のClojureとの間でバリデータを共有することにより、[DRY][44]原則を守ります。
 
 ## [Tutorial 13 - Better Safe Than Sorry (Part 1)][32]
 
-Set the stage for unit testing by learning about the `Enlive` template
-sytem and starting the shopping calculator example. Use code
-refactoring to satisfy the [DRY principle][44] and to solve a cyclic
-namespaces dependency problem.
+`Enlive`テンプレートシステムについて学習し、ショッピング電卓の例を開始することで、単体テストの段階を設定します。 [DRYの原則][44]を満たし、循環する名前空間の依存関係の問題を解決するために、コードのリファクタリングを使用します。
 
 ## [Tutorial 14 - Better Safe Than Sorry (Part 2)][33]
 
-Add validators to the `shoppingForm`, and do some unit testing.
+`shoppingForm`にバリデータを追加し、単体テストを行います。
 
 ## [Tutorial 15 - Better Safe Than Sorry (Part 3)][35]
 
-Configure a development environment that simultaneously satisfy in a
-single JVM the Immediate Feedback Principle by Bret Victor and the
-[Test Driven Development (TDD)][45].
+Bret Victorよる即時フィードバックの原則と[テスト駆動開発環境（TDD）][45]を1つのJVMで同時に満たす開発環境を構成します。
 
 ## [Tutorial 16 - On pleasing TDD practitioners][36]
 
-Make the [Test Driven Development][45] Environment more customizable.
+[テスト駆動開発環境][45]をよりカスタマイズ可能にする。
 
 ## [Tutorial 17 - REPLing with Enlive][37]
 
-Integrate validators into a web form in such a way that the
-user will be notified with the corresponding help messages when they
-enter invalid values in the form.
+フォームに無効な値を入力すると、対応するヘルプメッセージがユーザーに通知されるように、バリデータをWebフォームに統合します。
 
 ## [Tutorial 18 - Augmented TDD session][38]
 
-Complete the client-side form validation by exploiting the [TDD][45]
-environment augmented with CLJ/CLJS REPLs.
+CLJ/CLJSのREPLで拡張された[TDD][45]環境を利用して、クライアント側フォームのバリデーションを完成させます。
 
 ## [Tutorial 19 - Livin' on the edge][39]
 
-Explain how to make a library compliant with the new Reader
-Conditionals extension on CLJ/CLJS compilers.
+CLJ/CLJSコンパイラの新しいReader Conditionals拡張機能に準拠させる方法を説明します。
 
 ## [Tutorial 20 - House Keeping][40]
 
-Step by step guide for publishing a library to clojar repository by
-using `boot`.
+`boot`を使用してライブラリをclojarリポジトリに公開するためのステップバイステップガイド。
 
 ## [Tutorial 21 - A reasoned porting of the Official React Tutorial to Reagent - Part I][46]
 
-Part I of a step by step reasoned porting of the [Official React Tutorial][48] to [Reagent][49].
+パート1、ステップバイステップで[公式Reactチュートリアル][48]を[Reagent][49]に移植しました。
 
 ## [Tutorial 22 - A reasoned porting of the Official React Tutorial to Reagent - Part II][47]
 
-Part II of a step by step reasoned porting of the [Official React Tutorial][48] to [Reagent][49].
+パート2、ステップバイステップで[公式Reactチュートリアル][48]を[Reagent][49]に移植しました。
 
 # License
 
