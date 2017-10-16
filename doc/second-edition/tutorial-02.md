@@ -1,13 +1,10 @@
 # Tutorial 2 - Immediate Feedback Principle
 
-This tutorial is aimed at configuring a ClojureScript project to approach
-the Immediate Feedback principle, as described by Bret Victor in his
-[seminal talk][1].
+このチュートリアルでは、Bret Victorが彼の[トーク][1]で述べたように、即時フィードバックの原則に沿うようにClojureScriptプロジェクトを構成することを目的としています。
 
-## Preamble
+## Preamble (前文)
 
-If you want to start working from the end of the [previous tutorial][2],
-assuming you have [git][3] installed, do as follows:
+[前のチュートリアル][2]の最後から作業を開始する場合は、[git][3]がインストールされていると仮定して、次のようにします。
 
 ```bash
 git clone https://github.com/magomimmo/modern-cljs.git
@@ -15,36 +12,24 @@ cd modern-cljs
 git checkout se-tutorial-01
 ```
 
-This clones the tutorial repo and starts you at the end
-of the first tutorial.
+これは、チュートリアルのリポジトリをcloneし、第一回のチュートリアルの最後から始めます。
 
-> NOTE 1: the `se-` prefix means "second edition".
+> NOTE 1: `se-`は「second edition」の意味です。
 
 ## Introduction
 
-The `boot` building tool is more recent and less mature than the
-corresponding `leiningen` building tool, which is a kind of standard
-for CLJ developers. However, the `boot` community is working hard to
-progressively enrich it with features, *tasks* in `boot` parlance,
-aimed at filling the gaps and, perhaps, even overtake.
+`boot`ビルドツールは、CLJ開発者のための標準の一種です。`leiningen`ビルドツールと比べて、新しくてまだ成熟していません。 しかし、`boot`コミュニティは、ギャップを埋め、そしておそらくは追い越すことを目的として、機能、`boot`の用語の *タスク* を徐々に充実させるために熱心に働いています。
 
-If you take a look at the [tasks for boot][4] developed by the
-community, you'll discover that we already have everything we need to
-start approaching Bret Victor's principle of Immediate Feedback:
+コミュニティによって開発された[bootのtask][4]を見てみると、Bret Victorの即時フィードバックの原則に従うために必要なものがすべてあることがわかります。
 
-* [`boot-http`][5]: a `boot` task providing a simple CLJ based HTTP
-  server;
-* [`boot-reload`][6]: a `boot` task providing a live-reload of static
-  resources (i.e. CSS, images, etc.);
-* [`boot-cljs-repl`][7]: a `boot` task providing a REPL for CLJS
-  development;
-
-    > NOTE 2: we already used the `boot-cljs` task in the previous tutorial.
+* [`boot-http`][5]: 単純なCLJベースのHTTPサーバを提供する`boot`のtask。
+* [`boot-reload`][6]: 静的リソース（CSS、画像など）のライブリロードを提供する`boot`のtask。
+* [`boot-cljs-repl`][7]: CLJS開発のためのREPLを提供する`boot`のtask。
+    > NOTE 2: 既に前のチュートリアルで`boot-cljs`タスクを使用しました。
 
 ## CLJ-based HTTP server
 
-Let's start by adding the `boot-http` server to our `build.boot` file
-located in the `modern-cljs` home directory.
+まず、`boot-http`サーバを、`modern-cljs`ホームディレクトリにある`build.boot`ファイルに追加してみましょう。
 
 ```clj
 (set-env!
@@ -59,21 +44,16 @@ located in the `modern-cljs` home directory.
          '[pandeiro.boot-http :refer [serve]]) ;; make serve task visible
 ```
 
-    > NOTE 3: because of a bug in the current `0.7.6` version of `boot-http` we
-    > had to add the `0.2.12` version of `tools.nrepl` as well.
+> NOTE 3: 現在の `0.7.6`バージョンの` boot-http`のバグのために `tools.nrepl`の` 0.2.12`バージョンも追加しなければなりませんでした。
 
-As you see, we added the latest available release of `boot-http` to
-the project dependencies and made the `serve` task visible to the
-`boot` command by referring it in the `require` form.
+ご覧のとおり、最新の`boot-http`のリリースをプロジェクトの依存関係に追加し、`boot`コマンドを`require`フォームで参照することで、その`serve`タスクを利用することができます。
 
-Note that we're still implicitly exploiting a few `boot` defaults:
+私たちは依然としていくつかの`boot`デフォルトを暗黙的に利用していることに注意してください。
 
-* the use of Clojure 1.7.0, defined in the `boot.properties` file;
-* the use of ClojureScript 1.7.228, implicitly imported by the
-  `boot-cljs` dependency;
+* `boot.properties`ファイルで定義されているClojure 1.7.0の使用。
+* 暗黙的に`boot-cljs`依存関係によってインポートされたClojureScript 1.7.228の使用。
 
-As usual let's take a look at the help documentation of the newly
-added `serve` task:
+いつものように、新しく追加された`serve`タスクのヘルプドキュメントを見てみましょう：
 
 ```bash
 boot serve -h
@@ -97,9 +77,7 @@ Options:
   -N, --not-found SYM       SYM sets a ring handler for requested resources that aren't in your directory. Useful for pushState.
 ```
 
-The `-d` option is used to set the directory to be served. It will
-be created if it does not exist. Let's try the following `boot`
-command at the terminal:
+`-d`オプションは、提供されるディレクトリを設定するために使用されます。 それが存在しなければ作成されます。 ターミナルで次の`boot`コマンドを試してみましょう：
 
 ```bash
 boot serve -d target
@@ -108,13 +86,9 @@ boot serve -d target
 << started Jetty on http://localhost:3000 >>
 ```
 
-You'll note that the command will exit after starting the http server
-(i.e. Jetty). If you now type `http://localhost:3000` in your browser
-URL bar you'll get an error. This is because the `serve` task does not
-block.
+httpサーバ（Jetty）の起動後にコマンドが終了することに注意してください。 ブラウザのURLバーに`http://localhost:3000`と入力すると、エラーが発生します。 これは、`serve`タスクがブロックされないためです。
 
-To solve this problem we have to add the predefined `wait` task
-already included with `boot`.
+この問題を解決するには、すでに`boot`に含まれている定義済みの`wait`タスクを追加する必要があります。
 
 ```bash
 boot wait -h
@@ -127,7 +101,7 @@ Options:
   -t, --time MSEC  Set the interval in milliseconds to MSEC.
 ```
 
-Let's see this solution at work:
+この解決方法を見てみましょう：
 
 ```bash
 boot wait serve -d target
@@ -136,10 +110,9 @@ boot wait serve -d target
 << started Jetty on http://localhost:3000 >>
 ```
 
-The `boot` command does not exit anymore and you can connect to `http://localhost:3000` from
-your browser. Now kill the server (`CTRL-C`).
+`boot`コマンドはもう終了しないので、ブラウザから`http://localhost:3000`に接続できます。 さあ、サーバーを停止してください（`CTRL-C`）。
 
-`boot` tasks can be easily chained:
+`boot`タスクは簡単に連鎖させることができます。
 
 ```bash
 boot wait serve -d target cljs target
@@ -154,19 +127,13 @@ Compiling ClojureScript...
 Writing target dir(s)...
 ```
 
-Visit the `http://localhost:3000` URL and open the Developer Tool of
-your browser to verify that the `Hello, World!` string has been
-printed at the console. Before proceeding with the next step, kill the
-current `boot` process (`CTRL-C`).
+URL`http://localhost:3000`にアクセスし、ブラウザの開発者ツールを開いて文字列`Hello, World!`がコンソールに表示されていることを確認します。 次の手順に進む前に、現在のブートプロセス(`CTRL-C`)を終了してください。
 
 ## CLJS source recompilation
 
-If we want to approach the Immediate Feeback principle,
-any changed CLJS source code should be recompiled as soon as we
-modify and save a `.cljs` file.
+Immediate Feeback原則に従いたい場合は、`.cljs`ファイルを変更して保存するとすぐに、変更されたCLJSソースコードは再コンパイルされる必要があります。
 
-The `watch` task is another of the large number of the predefined tasks
-already included with `boot`.
+`watch`タスクは、既に`boot`に含まれている多数の定義済みタスクのうちの別のものです。
 
 ```bash
 boot watch -h
@@ -182,12 +149,9 @@ Options:
   -e, --exclude REGEX  Conj REGEX onto the set of regexes the paths of changed files must not match for watch to fire.
 ```
 
-Aside from triggering the execution of the CLJS recompilation whenever a
-change in the CLJS source code is saved, the `watch` task can even
-substitute the `wait` tasks, because it is not blocking either.
+CLJSソースコードの変更が保存されるたびにCLJSの再コンパイルの実行をトリガーするのとは別に、`watch`タスクはブロックもしていないため`wait`タスクに置き換えることもできます。
 
-It seems that just inserting the `watch` task before calling the
-`cljs` task we should be able to trigger the source recompilation.
+`cljs`タスクを呼び出す前に`watch`タスクを挿入するだけで、ソースの再コンパイルをトリガーできるはずです。
 
 ```bash
 boot serve -d target watch cljs target
@@ -206,11 +170,7 @@ Writing target dir(s)...
 Elapsed time: 8.787 sec
 ```
 
-Visit `http://localhost:3000` again in your browser to confirm
-that "Hello, World!" has been printed in the JS console. Then open the
-`src/cljs/modern_cljs/core.cljs` source file in your preferred editor
-and modify the message to be printed. Save the file. You should see that
-a new CLJS compilation task has been triggered in the terminal.
+ブラウザーで`http://localhost:3000`にアクセスして、「Hello、World！」を確認してください。 JSコンソールに表示されています。 次に、好きなエディタで`src/cljs/modern_cljs/core.cljs`ソースファイルを開き、表示するメッセージを変更し、ファイルを保存します。 新しいCLJSコンパイルタスクがターミナルで起動されていることがわかります。
 
 ```bash
 Writing main.cljs.edn...
@@ -220,11 +180,9 @@ Writing target dir(s)...
 Elapsed time: 0.174 sec
 ```
 
-Finally reload the html page to confirm that the `main.js` file linked
-to it has been updated by observing the message printed at the browser
-console. So far, so good.
+最後に、htmlページをリロードして、リンクされた`main.js`ファイルがブラウザコンソールで表示されたメッセージを観察して更新されたことを確認します。 ここまでは順調ですね。
 
-Before proceeding to the next step, kill the `boot` process (`CTRL-C`).
+次の手順に進む前に、`boot`プロセスを終了してください(`CTRL-C`)。
 
 ## Resources reloading
 
@@ -459,7 +417,7 @@ different). If your editor supports `nrepl` you are going to use that
 information to connect to the now running `nrepl server` with an
 `nrepl client`.
 
-> NOTE: Emacs and CIDER support this. You can learn more about them with these 
+> NOTE: Emacs and CIDER support this. You can learn more about them with these
 [resources](https://github.com/magomimmo/modern-cljs/blob/master/doc/supplemental-material/emacs-cider-references.md).
 
 At the moment we're happy enough to be able to run `cljs-repl` from a
