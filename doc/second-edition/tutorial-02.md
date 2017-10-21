@@ -186,14 +186,9 @@ Elapsed time: 0.174 sec
 
 ## Resources reloading
 
-Anytime you modify a CLJS source file you have to manually reload the
-html page pointing to it to verify the effect of your coding and we
-want to get much closer to the Immediate Feedback principle.
+CLJSソースファイルを変更するときはいつでも、あなたのコーディングの効果を検証するために、手動でHTMLページを指し示すHTMLページを再ロードしなければならず、即時フィードバックの原則にもっと近づけたいと思っています。
 
-Luckily, there is a `boot` task developed by the community to automate
-reloading of any static resource: [`boot-reload`][6]. Again we have
-to add the new task to the dependencies of the project and make it
-visible to `boot` by requiring its primary command:
+幸いにも、静的リソースの再ロードを自動化するためにコミュニティによって開発された`boot`タスクがあります：[boot-reload][6]。 ここでも、新しいタスクをプロジェクトの依存関係に追加して、主なコマンドを要求することで`boot`するようにする必要があります。
 
 ```clj
 (set-env!
@@ -210,8 +205,7 @@ visible to `boot` by requiring its primary command:
          '[adzerk.boot-reload :refer [reload]]) ;; make reload visible
 ```
 
-This task has to be inserted in the `boot` command immediately before
-the `cljs` compilation. Give it a try:
+このタスクは、`cljs`コンパイルの直前に`boot`コマンドに挿入する必要があります。 試してみましょう：
 
 ```bash
 boot serve -d target watch reload cljs target
@@ -232,36 +226,17 @@ Writing target dir(s)...
 Elapsed time: 8.281 sec
 ```
 
-Now reload the usual URL in your browser and repeat the above
-procedure by modifying the message to be printed in the browser
-console. As before you'll see that as soon as you save the `core.cljs`
-file the CLJS recompilation is triggered. This time, thanks to the
-`boot-reload` task, the page is reloaded as well. You can confirm this
-by seeing if the new message is printed in the browser's console.
+ブラウザでいつものURLをリロードし、ブラウザコンソールで表示するメッセージを変更して上記の手順を繰り返します。 前と同じように、`core.cljs`ファイルを保存するとすぐにCLJSの再コンパイルが起動されることがわかります。 今回は、`boot-reload`タスクのおかげで、ページも再読み込みされます。 これは、新しいメッセージがブラウザのコンソールに表示されているかどうかを確認することで確認できます。
 
-You can even modify the html source file to obtain an almost immediate
-feedback from the browser.
+htmlソースファイルを変更しても、ブラウザからほぼ即座にフィードバックを得ることができます。
 
-Nice stuff. Kill the `boot` command again (`CTRL-C`) before advancing to
-the next level.
+よいですね。 次のレベルに進む前に、`boot`コマンドをもう一度killしてください(`CTRL-C`)。
 
 ## Browser REPL (bREPL)
 
-One of the main reasons to use a LISP dialect like CLJ is its REPL
-(Read Eval Print Loop), which enables a very interactive style of
-programming. CLJS communities worked very hard to bring the
-same REPL-based programming experience to CLJS available in CLJ, and created a
-way to connect a CLJS REPL to almost any JS engine, including browser-embedded
-engines. This style of programming allows you to
-evaluate CLJS forms in the REPL and receive an immediate feedback in
-the browser to which the REPL is connected.
+CLJのようなLISP方言を使用する主な理由の1つは、非常にインタラクティブなプログラミングスタイルを可能にするREPL（Read Eval Print Loop）です。CLJSコミュニティは頑張って、CLJでCLJSが可能な、同じREPLベースのプログラミング経験をもたらしました。そして、CLJS REPLをブラウザ組み込みエンジンを含むほぼすべてのJSエンジンに接続する方法を作成しました。 このスタイルのプログラミングでは、REPLでCLJSフォームを評価し、REPLが接続されているブラウザで即座にフィードバックを受け取ることができます。
 
-The `boot` community has a task to offer in this area, too. Its name is
-`boot-cljs-repl`. As we have already done for the other tasks that `boot`
-does not include, we need to add `boot-cljs-repl` to the dependencies of the
-`build.boot` project file. Then, as usual, we have to require its primary tasks
-(i.e. `cljs-repl` and `start-repl`) to make them visible to the `boot`
-command at the terminal.
+`boot`コミュニティには、この分野でも提供するタスクがあります。 その名前は`boot-cljs-repl`です。 `boot`に含まれていない他のタスクですでに行ったように、`boot-cljs-repl`を`build.boot`プロジェクトファイルの依存関係に追加する必要があります。 それから、いつものように、ターミナルの`boot`コマンドにそれらを表示させるために、プライマリタスク（`cljs-repl`や`start-repl`）を要求する必要があります。
 
 ```clj
 (set-env!
@@ -280,8 +255,7 @@ command at the terminal.
          '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]) ;; make it visible
 ```
 
-Again, issue the `boot cljs-repl -h` command if you want to read the
-documentation on its advanced options.
+再度、高度なオプションに関するドキュメントを読む場合は、`boot cljs-repl -h`コマンドを発行してください。
 
 ```bash
 boot cljs-repl -h
@@ -302,12 +276,9 @@ Options:
   -s, --secure                 Flag to indicate whether the client should connect via wss. Defaults to false.
 ```
 
-The `cljs-repl` task has to be positioned just before the `cljs` task.
+`cljs-repl`タスクは、`cljs`タスクの直前に配置する必要があります。
 
-
-The `cljs-repl` author also suggests being explicit about the `Clojure`
-and `ClojureScript` releases to be added in the dependencies section of
-the `build.boot` build file.
+また、`cljs-repl`の作者は、`build.boot`ビルドファイルの依存関係セクションに追加される`Clojure`と`ClojureScript`リリースについて明示的に示唆しています。
 
 ```clj
 (set-env!
@@ -329,9 +300,7 @@ the `build.boot` build file.
          '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]])
 ```
 
-Before to go on with experimenting the newly added `cljs-repl` task,
-edit the version of clojure compiler used by `boot` itself in the `boot.properties`
-file we introduced in the previous tutorial as follows:
+新しく追加された`cljs-repl`タスクを試してみる前に、前のチュートリアルで紹介した`boot.properties`ファイルの`boot`自身で使用されるclojureコンパイラのバージョンを次のように編集します。
 
 ```bash
 #http://boot-clj.com
@@ -340,8 +309,8 @@ BOOT_CLOJURE_NAME=org.clojure/clojure
 BOOT_CLOJURE_VERSION=1.8.0
 BOOT_VERSION=2.7.1
 ```
-If you now launch the following `boot` command you'll receive a
-warning and an error:
+
+今の時点で、次の`boot`コマンドを起動すると、警告とエラーが表示されます。
 
 ```bash
 boot serve -d target watch reload cljs-repl cljs target
@@ -357,9 +326,7 @@ java.io.FileNotFoundException: Could not locate cemerick/piggieback__init.class 
 Elapsed time: 0.734 sec
 ```
 
-This is because `boot-cljs-repl` does not transitively include its
-dependencies and you have to explicitly add them in the
-`:dependencies` section of the `build.boot` file:
+これは、`boot-cljs-repl`には依存関係が一時的に含まれていないため、`build.boot`ファイルの`:dependencies`セクションに明示的に追加する必要があるためです。
 
 ```clj
 
@@ -384,11 +351,9 @@ dependencies and you have to explicitly add them in the
 
 ```
 
-> NOTE 3: At the moment we don't take care of the `:scope` of the
-> dependencies. We'll come back to this directive in a later tutorial.
+> NOTE 3: 現時点では、依存関係の`:scope`を考慮していません。 後のチュートリアルでこの指示に戻ります。
 
-After having quit the previous process, you can safely run the
-`boot` command in the terminal as follows:
+前のプロセスを終了した後、次のように端末で `boot`コマンドを安全に実行することができます：
 
 ```bash
 boot serve -d target watch reload cljs-repl cljs target
@@ -416,13 +381,11 @@ started on the local host at a port number (your port number will be
 different). If your editor supports `nrepl` you are going to use that
 information to connect to the now running `nrepl server` with an
 `nrepl client`.
+コマンド出力は、[`nrepl server`][8]がローカルホスト上でポート番号で開始されたことを通知します（ポート番号は異なります）。 エディタが`nrepl`をサポートしている場合は、その情報を使用して、`nrepl client`を使用して現在実行中の`nrepl server`に接続します。
 
-> NOTE: Emacs and CIDER support this. You can learn more about them with these
-[resources](https://github.com/magomimmo/modern-cljs/blob/master/doc/supplemental-material/emacs-cider-references.md).
+> NOTE: EmacsとCIDERはこれをサポートしています。詳しくは、[resources](https://github.com/magomimmo/modern-cljs/blob/master/doc/supplemental-material/emacs-cider-references.md)を参照のこと。
 
-At the moment we're happy enough to be able to run `cljs-repl` from a
-second terminal by first launching the predefined `repl` task included
-with `boot` and passing it the `-c` (i.e. client) option:
+現時点では、 `boot`に含まれている定義済みの` repl`タスクを起動し、 `-c`（クライアント）オプションを渡すことで、第2の端末から` cljs-repl`を実行できる程度には幸せです：
 
 ```bash
 # in a new terminal
@@ -444,9 +407,7 @@ Find by Name: (find-name "part-of-name-here")
 boot.user=>
 ```
 
-This is a standard CLJ REPL defaulted to the `boot.user`
-namespace. From here we can launch a browser based CLJS REPL (bREPL) as
-follows:
+これは `boot.user`名前空間にデフォルト設定された標準のCLJ REPLです。 ここから、ブラウザベースのCLJS REPL（bREPL）を次のように起動できます。
 
 ```cljs
 boot.user=> (start-repl)
@@ -455,9 +416,8 @@ boot.user=> (start-repl)
 Writing boot_cljs_repl.cljs...
 ```
 
-The terminal is now waiting for a client connection from the
-browser. Visit the usual http://localhost:3000 URL to activate the
-bREPL connection.
+The terminal is now waiting for a client connection from the browser. Visit the usual http://localhost:3000 URL to activate the bREPL connection.
+端末は、ブラウザからのクライアント接続を待っています。 bREPL接続を有効にするには、通常のURL「http://localhost:3000」を参照してください。
 
 ```cljs
  connected! >>
@@ -466,19 +426,16 @@ nil
 cljs.user=>
 ```
 
-To confirm that you can evaluate CLJS forms from the bREPL,
-submit the alert function to the browser:
+bREPLからCLJSフォームを評価できることを確認するには、アラート機能をブラウザに送信します。
 
 ```cljs
 (js/alert "Hello, ClojureScript")
 nil
 ```
 
-To stop the bREPL, submit the `:cljs/quit` expression. Then stop the
-CLJ REPL (CTRL-D or `(exit)` or `(quit)`). Finally stop `boot`
-(CTRL-C).
+bREPLを停止するには、 `:cljs/quit`式を実行してください。 その後、CLJ REPLを停止します（CTRL-Dまたは `(exit)`または `(quit)`）。 最後に `boot`を止めて(CTRL-C)ください。
 
-Before stepping to the next tutorial reset your git repository:
+次のチュートリアルに進む前に、gitリポジトリをリセットしてください。
 
 ```bash
 git reset --hard
@@ -486,9 +443,7 @@ git reset --hard
 
 ## Next step - [Tutorial 3: House Keeping][9]
 
-In the next [tutorial][9] we're going to automate the launching of the
-`boot` command to approach the Immediate Feedback Development
-Environment (IFDE).
+次の[チュートリアル][9]では、即時フィードバック開発環境（IFDE）にアプローチするための `boot`コマンドの起動を自動化します。
 
 # License
 
@@ -496,11 +451,11 @@ Copyright © Mimmo Cosenza, 2012-2015. Released under the Eclipse Public
 License, the same as Clojure.
 
 [1]: https://vimeo.com/36579366
-[2]: https://github.com/magomimmo/modern-cljs/blob/master/doc/second-edition/tutorial-01.md
+[2]: https://github.com/ichisemasashi/modern-cljs/tree/jp/doc/second-edition/tutorial-01.md
 [3]: https://git-scm.com/
 [4]: https://github.com/boot-clj/boot/wiki/Community-Tasks
 [5]: https://github.com/pandeiro/boot-http
 [6]: https://github.com/adzerk-oss/boot-reload
 [7]: https://github.com/adzerk-oss/boot-cljs-repl
 [8]: https://github.com/clojure/tools.nrepl
-[9]: https://github.com/magomimmo/modern-cljs/blob/master/doc/second-edition/tutorial-03.md
+[9]: https://github.com/ichisemasashi/modern-cljs/tree/jp/doc/second-edition/tutorial-03.md
